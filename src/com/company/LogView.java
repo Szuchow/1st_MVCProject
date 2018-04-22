@@ -48,6 +48,7 @@ public class LogView extends JFrame {
        a.add(Box.createRigidArea(new Dimension(110, 200)));
        a.add(newW);
 
+
        add(a);
        newW.addActionListener(new ActionListener() {
            @Override

@@ -1,11 +1,13 @@
 package com.company;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LogModel {
     private final LogController ctrl;
     private List<Log> data;
+    JTextField jTextField = new JTextField(0);
 
     public LogModel(LogController logController) {
         this.ctrl = logController;

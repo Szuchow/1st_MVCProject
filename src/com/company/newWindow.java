@@ -1,40 +1,51 @@
 package com.company;
 
-import java.awt.event.TextListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class newWindow {
 
 
-    JFrame frame = new JFrame ("MyPanel");
+    List<String> lista = new ArrayList();
+    List<newWindow> refreshList = new ArrayList<>();
+    
+    JScrollPane scrollPane = new JScrollPane();
 
-    JPanel Data = new JPanel();
+
+    JFrame frame = new JFrame ("MyPanel");
+    JPanel upper = new JPanel();
     JPanel lower = new JPanel();
+
+
     JTextField jTextField = new JTextField(0);
+
+
+
     public newWindow() {
         frame.setDefaultCloseOperation (JFrame.HIDE_ON_CLOSE);
+        JButton addButton = new JButton("Add");
 
-        jTextField.addActionListener(new ActionListener() {
+        addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                upper.revalidate();
+                upper.repaint();
                 test();
-
-
+                printData(lista);
             }
         });
 
 
-        JScrollPane scrollPane = new JScrollPane(Data);
-        JButton addButton = new JButton("Add");
+        JScrollPane scrollPane = new JScrollPane(upper);
+        upper.setLayout(new BoxLayout(upper, BoxLayout.Y_AXIS));
 
-        frame.getContentPane().add(BorderLayout.NORTH, scrollPane);
+
+        frame.getContentPane().add(BorderLayout.CENTER, scrollPane);
         frame.getContentPane().add(BorderLayout.SOUTH, lower);
-
+        //upper.add(new JButton("j"));
         //lower.add(scrollPane);
         lower.add(jTextField);
         lower.add(addButton);
@@ -47,9 +58,23 @@ public class newWindow {
 
     public void test() {
 
-        new Log(jTextField.getText());
+
+        //Data1.add(scrollPane);
+        lista.add(jTextField.getText());
+
+    }
+
+    public void printData(List<String> lista) {
+        upper.removeAll();
+        for (String s : lista) {
+            JLabel jLabel = new JLabel(s);
+            upper.add(jLabel);
 
 
+
+        }
+        frame.pack();
+        frame.setSize(500, 300);
     }
 
 
