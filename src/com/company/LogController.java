@@ -1,32 +1,36 @@
 package com.company;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LogController {
 
     private LogModel logModel;
     private LogView logView;
 
+
+    List<String> lista = new ArrayList();
+    List<newWindow> x = new ArrayList();
+
     public LogController() {
         logModel = new LogModel(this);
-        logView = new LogView(this);
+        logView = new LogView(this, lista);
     }
 
     public void start() {
-        logModel.dumpData();
-        //logView.showLogs(logModel.getData());
         logView.start();
         logView.firstWindow();
-        logModel.getData();
     }
-
 
     public void onButtonClick(ActionEvent e) {
-        new newWindow();
+        x.add(new newWindow(this, lista));
 
     }
 
-
-
-
+    public void heyThereIsANewValue() {
+        for (newWindow el : x) {
+            el.refresh();
+        }
+    }
 }

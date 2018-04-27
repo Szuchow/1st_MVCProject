@@ -9,74 +9,58 @@ import java.awt.event.ActionListener;
 
 public class newWindow {
 
-
-    List<String> lista = new ArrayList();
-    List<newWindow> refreshList = new ArrayList<>();
-    
+    private LogController ctrl;
     JScrollPane scrollPane = new JScrollPane();
-
-
-    JFrame frame = new JFrame ("MyPanel");
+    JFrame frame = new JFrame ("Child Window");
     JPanel upper = new JPanel();
     JPanel lower = new JPanel();
-
-
     JTextField jTextField = new JTextField(0);
+    List<String> lista;
+    LogController logController;
 
-
-
-    public newWindow() {
+    public newWindow(LogController logController, List<String> lista) {
+        this.logController = logController;
         frame.setDefaultCloseOperation (JFrame.HIDE_ON_CLOSE);
         JButton addButton = new JButton("Add");
-
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage("logo-pjatk.png"));
+        frame.setLocationRelativeTo(null);
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                upper.revalidate();
-                upper.repaint();
-                test();
+                getText();
                 printData(lista);
             }
         });
 
-
         JScrollPane scrollPane = new JScrollPane(upper);
         upper.setLayout(new BoxLayout(upper, BoxLayout.Y_AXIS));
-
-
         frame.getContentPane().add(BorderLayout.CENTER, scrollPane);
         frame.getContentPane().add(BorderLayout.SOUTH, lower);
-        //upper.add(new JButton("j"));
-        //lower.add(scrollPane);
         lower.add(jTextField);
         lower.add(addButton);
         lower.setLayout(new BoxLayout(lower, BoxLayout.LINE_AXIS));
-
+        printData(lista);
+        this.lista = lista;
         frame.pack();
         frame.setVisible (true);
         frame.setSize(500, 300);
     }
 
-    public void test() {
-
-
-        //Data1.add(scrollPane);
+    public void getText() {
         lista.add(jTextField.getText());
-
+        logController.heyThereIsANewValue();
     }
 
     public void printData(List<String> lista) {
         upper.removeAll();
         for (String s : lista) {
-            JLabel jLabel = new JLabel(s);
+            JLabel jLabel = new JLabel(s.replaceAll("\\s+",""));
             upper.add(jLabel);
-
-
-
         }
         frame.pack();
         frame.setSize(500, 300);
     }
 
-
-
+    public void refresh() {
+        printData(this.lista);
+    }
 }
